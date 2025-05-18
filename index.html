@@ -166,17 +166,41 @@
   }
 
   #bottom-nav .fa-icon {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     margin-left: 15px;
     cursor: pointer;
     color: #555;
     user-select: none;
     flex-shrink: 0;
     align-self: center;
+    padding: 4px 6px;
+    transition: color 0.2s ease;
   }
 
   #bottom-nav .fa-icon:hover {
     color: #000;
+  }
+
+  #bottom-nav #inline-search {
+    flex-shrink: 0;
+    margin: 0 15px;
+  }
+  #bottom-nav #inline-search input {
+    width: 180px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    border: 2px solid #000;
+    border-radius: 20px;
+    background-color: white;
+    color: #000;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  #bottom-nav #inline-search input::placeholder {
+    color: #444;
+  }
+  #bottom-nav #inline-search input:focus {
+    border-color: #0078d4;
   }
 
   @media (max-width: 640px) {
@@ -190,6 +214,9 @@
       width: 95vw;
       padding-left: 10px;
       padding-right: 10px;
+    }
+    #bottom-nav #inline-search input {
+      width: 120px;
     }
   }
 </style>
@@ -220,10 +247,12 @@
   <button id="btn-Computer">Computer</button>
   <button id="btn-TipsTricks">Tips & Tricks</button>
   <button id="btn-Exams">Exams</button>
-  <button onclick="window.location.href='https://imrutunjaya.github.io/Prototype3/'">Advanced Learner's</button>
   <button onclick="window.location.href='https://imrutunjaya.github.io/notes/'">Annotation</button>
-  <i class="fas fa-cog fa-icon" title="Settings"></i>
-  <i class="fas fa-user fa-icon" title="User Data"></i>
+  <div id="inline-search" title="Search topics">
+    <input type="text" placeholder="Search topics" aria-label="Search topics" />
+  </div>
+  <i class="fa-regular fa-gear fa-icon" title="Settings"></i>
+  <i class="fa-regular fa-user fa-icon" title="User Data"></i>
 </nav>
 
 <script>
@@ -271,6 +300,7 @@
     const topicContainer = document.getElementById('topic-container');
     const markdownContent = document.getElementById('markdown-content');
     const bottomNav = document.getElementById('bottom-nav');
+    const inlineSearchInput = document.querySelector('#inline-search input');
 
     let topicsList = [];
     let filteredTopics = [];
@@ -304,6 +334,17 @@
       renderTopicList();
     });
 
+    // Inline search input event
+    inlineSearchInput.addEventListener('input', () => {
+      const val = inlineSearchInput.value.trim().toLowerCase();
+      filteredTopics = topicsList.filter(t => t.title.toLowerCase().includes(val));
+      renderTopicList();
+      // When inline search is active, hide main search box
+      if (val.length > 0) {
+        searchInput.value = '';
+      }
+    });
+
     function loadSubject(subjectKey) {
       currentSubjectKey = subjectKey;
       const subjectTopics = subjects[subjectKey];
@@ -320,6 +361,7 @@
       searchInput.disabled = false;
       searchInput.parentElement.style.display = 'block';
       searchInput.value = '';
+      inlineSearchInput.value = '';
       bottomNav.style.display = 'flex';
 
       topicsList = [...subjectTopics];
@@ -363,6 +405,7 @@
       topicContainer.style.display = 'none';
       markdownContent.style.display = 'block';
       searchInput.parentElement.style.display = 'none';
+      inlineSearchInput.value = '';
       searchInput.disabled = true;
       bottomNav.style.display = 'none';
 
@@ -387,10 +430,9 @@
       });
     }
 
-    // Load default subject at start - changed to Syllabus as requested
+    // Load default subject at start
     loadSubject('Syllabus');
   })();
 </script>
 </body>
 </html>
-
