@@ -182,11 +182,11 @@
   }
 
   #bottom-nav #inline-search {
-    flex-shrink: 0;
+    flex-grow: 1;
     margin: 0 15px;
   }
   #bottom-nav #inline-search input {
-    width: 180px;
+    width: 100%;
     padding: 6px 10px;
     font-size: 0.9rem;
     border: 2px solid #000;
@@ -216,7 +216,7 @@
       padding-right: 10px;
     }
     #bottom-nav #inline-search input {
-      width: 120px;
+      width: 100%;
     }
   }
 </style>
@@ -251,7 +251,6 @@
   <div id="inline-search" title="Search topics">
     <input type="text" placeholder="Search topics" aria-label="Search topics" />
   </div>
-  <i class="fa-regular fa-gear fa-icon" title="Settings"></i>
   <i class="fa-regular fa-user fa-icon" title="User Data"></i>
 </nav>
 
@@ -436,3 +435,4 @@
 </script>
 </body>
 </html>
+
