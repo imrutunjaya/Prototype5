@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Study Notes</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  header#topbar {
+    background-color: white;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  #back-button {
+    font-size: 25px;
+    cursor: pointer;
+    color: #333;
+    user-select: none;
+    display: none;
+  }
+
+  #subject-title {
+    font-weight: 300;
+    font-size: 18px;
+    color: #333;
+    margin: auto;
+  }
+
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px 80px;
+  }
+
+  #search-box {
+    margin-bottom: 12px;
+  }
+
+  #search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #topic-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topic-item {
+    padding: 13px 0px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: #333;
+    font-weight: 300;
+    user-select: none;
+  }
+
+  .topic-item:hover {
+    background-color: #f0f0f0;
+  }
+
+  #markdown-content {
+    margin: 0 auto;
+    padding: 16px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    display: none;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* Markdown headings */
+  #markdown-content h1,
+  #markdown-content h2,
+  #markdown-content h3 {
+    color: #0078d4;
+    margin-top: 1.4em;
+    margin-bottom: 0.5em;
+  }
+
+  /* Links */
+  #markdown-content a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  #markdown-content a:hover {
+    text-decoration: underline;
+  }
+
+  /* Code blocks */
+  #markdown-content pre {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    font-family: Consolas, monospace;
+    overflow-x: auto;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  #bottom-nav {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0.75rem 1rem;
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -1px 2px rgba(0,0,0,0.1);
+    z-index: 20;
+    border-top: 1px solid #ccc;
+    scroll-snap-type: x mandatory;
+  }
+
+  #bottom-nav button {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    margin: 0 6px;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.15s ease;
+    user-select: none;
+  }
+
+  #bottom-nav button.active {
+    background-color: #000;
+    color: #fff;
+    pointer-events: none;
+  }
+
+  #bottom-nav .fa-icon {
+    font-size: 1.5rem;
+    margin-left: 15px;
+    cursor: pointer;
+    color: #555;
+    user-select: none;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  #bottom-nav .fa-icon:hover {
+    color: #000;
+  }
+
+  @media (max-width: 640px) {
+    main {
+      padding: 12px 12px 85px;
+    }
+
+    #topic-container,
+    #markdown-content {
+      max-width: 95vw;
+      width: 95vw;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+</style>
+
+<!-- Marked library for Markdown parsing -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+<header id="topbar">
+  <span id="back-button" title="Back">&#8592;</span>
+  <h1 id="subject-title">Study Notes</h1>
+</header>
+
+<main>
+  <div id="search-box">
+    <input type="text" id="search-input" placeholder="Search topics..." aria-label="Search topics" />
+  </div>
+  <div id="topic-container"></div>
+  <article id="markdown-content"></article>
+</main>
+
+<nav id="bottom-nav">
+  <button id="btn-Syllabus">Syllabus</button>
+  <button id="btn-Maths">Maths</button>
+  <button id="btn-CurrentAffairs">Current Affairs</button>
+  <button id="btn-English">English</button>
+  <button id="btn-Computer">Computer</button>
+  <button id="btn-TipsTricks">Tips & Tricks</button>
+  <button id="btn-Exams">Exams</button>
+  <button onclick="window.location.href='https://imrutunjaya.github.io/Prototype3/'">Advanced Learner's</button>
+  <button onclick="window.location.href='https://imrutunjaya.github.io/notes/'">Annotation</button>
+  <i class="fas fa-cog fa-icon" title="Settings"></i>
+  <i class="fas fa-user fa-icon" title="User Data"></i>
+</nav>
+
+<script>
+  (() => {
+    const topicsFolder = 'topics/';
+
+    // Subjects with array of topic markdown files per subject
+    const subjects = {
+      Syllabus: [
+        { title: "Syllabus Overview", file: "syllabus/overview.md" },
+        { title: "Math Syllabus", file: "syllabus/maths.md" },
+        { title: "English Syllabus", file: "syllabus/english.md" }
+      ],
+      Maths: [
+        { title: "Algebra", file: "maths/algebra.md" },
+        { title: "Trigonometry", file: "maths/trigonometry.md" },
+        { title: "Linear Equations", file: "maths/linear_equations.md" },
+        { title: "Geometry", file: "maths/geometry.md" }
+      ],
+      CurrentAffairs: [
+        { title: "Latest Nobel Prize", file: "current_affairs/nobel_prize.md" },
+        { title: "Global Climate Summit", file: "current_affairs/climate_summit.md" }
+      ],
+      English: [
+        { title: "Parts of Speech", file: "english/parts_of_speech.md" },
+        { title: "Tenses", file: "english/tenses.md" }
+      ],
+      Computer: [
+        { title: "What is Computer?", file: "computer/what_is_computer.md" },
+        { title: "Input Devices", file: "computer/input_devices.md" }
+      ],
+      TipsTricks: [
+        { title: "Study Tip: Pomodoro", file: "tips_and_tricks/pomodoro.md" },
+        { title: "Memory Tricks", file: "tips_and_tricks/memory_tricks.md" }
+      ],
+      Exams: [
+        { title: "Exam Preparation", file: "exams/preparation.md" },
+        { title: "Exam Strategies", file: "exams/strategies.md" }
+      ]
+    };
+
+    const backButton = document.getElementById('back-button');
+    const subjectTitle = document.getElementById('subject-title');
+    const searchInput = document.getElementById('search-input');
+    const topicContainer = document.getElementById('topic-container');
+    const markdownContent = document.getElementById('markdown-content');
+    const bottomNav = document.getElementById('bottom-nav');
+
+    let topicsList = [];
+    let filteredTopics = [];
+    let currentSubjectKey = '';
+
+    // Attach nav events
+    Object.keys(subjects).forEach(subjectKey => {
+      const btn = document.getElementById('btn-' + subjectKey);
+      if (btn) {
+        btn.addEventListener('click', () => loadSubject(subjectKey));
+      }
+    });
+
+    backButton.addEventListener('click', () => {
+      // Go back to topic list
+      subjectTitle.textContent = currentSubjectKey.replace(/([A-Z])/g, ' $1').trim();
+      backButton.style.display = 'none';
+      markdownContent.style.display = 'none';
+      topicContainer.style.display = 'flex';
+      searchInput.disabled = false;
+      searchInput.parentElement.style.display = 'block';
+      bottomNav.style.display = 'flex';
+      filteredTopics = [...topicsList];
+      searchInput.value = '';
+      renderTopicList();
+    });
+
+    searchInput.addEventListener('input', () => {
+      const val = searchInput.value.trim().toLowerCase();
+      filteredTopics = topicsList.filter(t => t.title.toLowerCase().includes(val));
+      renderTopicList();
+    });
+
+    function loadSubject(subjectKey) {
+      currentSubjectKey = subjectKey;
+      const subjectTopics = subjects[subjectKey];
+      if (!subjectTopics) {
+        topicContainer.innerHTML = `<p>No topics found for ${subjectKey}</p>`;
+        return;
+      }
+
+      subjectTitle.textContent = subjectKey.replace(/([A-Z])/g, ' $1').trim();
+
+      backButton.style.display = 'none';
+      markdownContent.style.display = 'none';
+      topicContainer.style.display = 'flex';
+      searchInput.disabled = false;
+      searchInput.parentElement.style.display = 'block';
+      searchInput.value = '';
+      bottomNav.style.display = 'flex';
+
+      topicsList = [...subjectTopics];
+      filteredTopics = [...topicsList];
+      renderTopicList();
+      markActiveButton(subjectKey);
+    }
+
+    function renderTopicList() {
+      topicContainer.innerHTML = '';
+      if (filteredTopics.length === 0) {
+        topicContainer.innerHTML = '<p>No topics found.</p>';
+        return;
+      }
+      filteredTopics.forEach((topic, index) => {
+        const div = document.createElement('div');
+        div.className = 'topic-item';
+        div.textContent = topic.title;
+        div.tabIndex = 0;
+        div.setAttribute('role', 'button');
+        div.setAttribute('aria-label', `View topic ${topic.title}`);
+        div.addEventListener('click', () => showTopicContent(index));
+        div.addEventListener('keypress', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showTopicContent(index);
+          }
+        });
+        topicContainer.appendChild(div);
+      });
+    }
+
+    async function showTopicContent(index) {
+      if (!filteredTopics[index]) return;
+
+      const topic = filteredTopics[index];
+
+      backButton.style.display = 'inline';
+      subjectTitle.textContent = `${currentSubjectKey.replace(/([A-Z])/g, ' $1').trim()} > ${topic.title}`;
+
+      topicContainer.style.display = 'none';
+      markdownContent.style.display = 'block';
+      searchInput.parentElement.style.display = 'none';
+      searchInput.disabled = true;
+      bottomNav.style.display = 'none';
+
+      try {
+        const res = await fetch(topicsFolder + topic.file);
+        if (!res.ok) throw new Error('Failed to load markdown file');
+        const mdText = await res.text();
+        markdownContent.innerHTML = marked.parse(mdText);
+        markdownContent.scrollTop = 0;
+      } catch {
+        markdownContent.innerHTML = '<p style="color:red;">Failed to load content for this topic.</p>';
+      }
+    }
+
+    function markActiveButton(subjectKey) {
+      Object.keys(subjects).forEach(key => {
+        const btn = document.getElementById('btn-' + key);
+        if (btn) {
+          if (key === subjectKey) btn.classList.add('active');
+          else btn.classList.remove('active');
+        }
+      });
+    }
+
+    // Load default subject at start - changed to Syllabus as requested
+    loadSubject('Syllabus');
+  })();
+</script>
+</body>
+</html>
+
