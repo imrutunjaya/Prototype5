@@ -3,7 +3,7 @@
 <style>
   /* Container */
   .container {
-    max-width: 720px;
+    max-width: 960px;
     margin: 2rem auto;
     font-family: 'Roboto', Arial, sans-serif;
     color: #202124;
@@ -122,7 +122,7 @@
     margin-top: 3.5rem;
     background: white;
     border-radius: 12px;
-    padding: 2rem 2rem 3rem;
+    padding: 2rem 3rem 3rem;
     box-shadow: 0 6px 15px rgba(0,0,0,0.07);
   }
   .section h2 {
