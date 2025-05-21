@@ -11,3 +11,15 @@
 ---
 
 ## Preview
+About this book
+
+"The Great Adventure" is an enthralling journey that explores themes of courage, friendship, and self-discovery. Written by the Geeks for Geeks team, this book weaves a tale that pulls readers into a vivid world full of memorable characters and unexpected twists. Perfect for fans of gripping storytelling and emotional depth.
+Ratings and reviews
+
+⭐️⭐️⭐️⭐️☆
+4.0 (1,2 ratings)
+Notes & Support
+
+If you experience any issues with this book or its content, please visit our Support Page for assistance and further information.
+
+We appreciate your feedback to help us improve.
