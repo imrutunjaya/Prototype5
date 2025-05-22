@@ -1,387 +1,298 @@
-# The Great Adventure - Exciting Book Landing Page
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Great Adventure - Minimal Line Theme</title>
 <style>
-  /* Container full viewport width with no space */
-  .container {
-    max-width: 100vw;
-    margin: 0;
-    padding: 0 2rem 3rem;
-    font-family: 'Roboto', Arial, sans-serif;
-    color: #202124;
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+  /* Reset */
+  *, *::before, *::after {
     box-sizing: border-box;
   }
-  /* Hero full width */
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #fafafa;
+    color: #222;
+    line-height: 1.5;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  a:hover, a:focus {
+    text-decoration: underline;
+  }
+
+  /* Container */
+  .container {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    padding: 1.5rem;
+  }
+
+  /* Hero Section */
   .hero {
     position: relative;
-    background: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1300&q=80') center/cover no-repeat;
-    height: 320px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 3rem 4rem;
-    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
+    background: linear-gradient(135deg, #e0e0e0 0%, #f9f9f9 100%);
+    border-radius: 8px;
+    padding: 3rem 2rem 4rem;
+    text-align: center;
   }
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%);
-    z-index: 0;
-  }
-  .hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
+  .hero img {
+    max-width: 160px;
     width: 100%;
+    height: auto;
+    margin-bottom: 1.5rem;
+    filter: grayscale(40%);
   }
   .hero-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin: 0 0 0.25rem;
-    letter-spacing: 0.03em;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.75);
+    font-weight: 700;
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    color: #222;
   }
   .hero-subtitle {
-    font-size: 1.35rem;
-    opacity: 0.85;
-    margin: 0 0 1.5rem;
-    text-shadow: 0 3px 6px rgba(0,0,0,0.7);
     font-weight: 500;
-  }
-  /* Buttons with more vibrant blue and 3D effect */
-  .buttons {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-  }
-  .btn {
-    background: linear-gradient(145deg, #1e40ff, #3b82f6);
-    color: white;
-    font-weight: 700;
-    border-radius: 28px;
-    padding: 0.85rem 3.2rem;
     font-size: 1.25rem;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    box-shadow:
-      0 4px 8px rgba(27, 27, 255, 0.4),
-      inset 0 -3px 6px rgba(255, 255, 255, 0.35),
-      inset 0 3px 3px rgba(0, 0, 75, 0.4);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    color: #555;
+    margin-bottom: 1.75rem;
+  }
+
+  /* Buttons row */
+  .buttons {
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    gap: 1rem;
   }
-  .btn:hover, .btn:focus {
-    background: linear-gradient(145deg, #3b82f6, #1e40ff);
-    box-shadow:
-      0 6px 16px rgba(27, 27, 255, 0.6),
-      inset 0 -3px 6px rgba(255, 255, 255, 0.55),
-      inset 0 3px 3px rgba(0, 0, 100, 0.5);
-    outline: none;
-  }
-  .btn-arrow {
-    background-color: white;
-    border-radius: 14px;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    cursor: pointer;
-    box-shadow:
-      0 6px 12px rgba(0,0,0,0.2),
-      inset 0 -3px 5px rgba(255,255,255,0.8);
-    border: none;
-    transition: background-color 0.25s ease, box-shadow 0.3s ease;
-  }
-  .btn-arrow:hover, .btn-arrow:focus {
-    background-color: #f3f6ff;
-    box-shadow:
-      0 8px 18px rgba(0,0,0,0.25),
-      inset 0 -3px 5px rgba(255,255,255,0.9);
-    outline: none;
-  }
-  .btn-arrow svg {
-    width: 26px;
-    height: 26px;
-    fill: #405cf5;
-  }
-  .btn-report {
-    background-color: transparent;
-    color: #3b82f6;
-    font-weight: 700;
-    border-radius: 28px;
-    padding: 0.7rem 1.4rem;
-    border: 3px solid #3b82f6;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  }
-  .btn-report:hover, .btn-report:focus {
-    background-color: #3b82f6;
-    color: white;
-    border-color: #1e40ff;
-    outline: none;
-  }
-  .btn-report:focus-visible {
-    outline: 2px solid #1e40ff;
-    outline-offset: 3px;
-  }
-  /* Author */
-  .author {
-    margin-top: 1rem;
+  button, a.button {
+    font-family: inherit;
     font-weight: 600;
-    font-size: 1.15rem;
-    letter-spacing: 0.04em;
-    opacity: 0.9;
-    user-select: none;
-    text-shadow: 0 1px 2px rgba(0,0,50,0.3);
+    font-size: 1rem;
+    padding: 0.5rem 1.75rem;
+    border-radius: 22px;
+    background: transparent;
+    border: 2px solid #555;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
-  /* Preview */
-  .section {
-    margin: 3.5rem auto 4rem;
-    background: white;
-    border-radius: 16px;
-    padding: 3rem 3rem 4rem;
-    max-width: 1200px;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  button:hover, a.button:hover,
+  button:focus, a.button:focus {
+    border-color: #007acc;
+    color: #007acc;
+    outline: none;
+    text-decoration: none;
   }
-  .section h2 {
-    font-size: 2.25rem;
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-    color: #1a56db;
+  button svg, a.button svg {
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    width: 18px;
+    height: 18px;
   }
+
+  /* Author text */
+  .author {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: #888;
+  }
+
+  /* Section default style */
+  section {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+  }
+  section:first-of-type {
+    margin-top: 2rem;
+    border-top: none;
+    padding-top: 0;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #007acc;
+  }
+
+  /* Preview gallery */
   .preview-gallery {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     overflow-x: auto;
-    padding-bottom: 1.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: #3b82f6 #f0f5ff;
-    scroll-snap-type: x mandatory;
-  }
-  .preview-gallery::-webkit-scrollbar {
-    height: 10px;
-  }
-  .preview-gallery::-webkit-scrollbar-thumb {
-    background-color: #3b82f6;
-    border-radius: 6px;
-  }
-  .preview-gallery::-webkit-scrollbar-track {
-    background-color: #f0f5ff;
-    border-radius: 6px;
+    padding-bottom: 0.5rem;
   }
   .preview-gallery img {
+    border-radius: 8px;
+    height: 160px;
     flex-shrink: 0;
-    height: 200px;
-    border-radius: 16px;
+    box-shadow: none;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     cursor: pointer;
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
-    box-shadow: 0 6px 22px rgba(59, 130, 246, 0.25);
-    scroll-snap-align: center;
   }
-  .preview-gallery img:hover,
-  .preview-gallery img:focus {
-    transform: scale(1.15);
-    box-shadow: 0 16px 44px rgba(59, 130, 246, 0.45);
+  .preview-gallery img:hover, .preview-gallery img:focus {
+    box-shadow: 0 4px 12px rgba(0, 120, 212, 0.3);
+    transform: scale(1.05);
     outline: none;
   }
-  /* About */
+
+  /* About text */
   .about-text {
-    font-size: 1.25rem;
-    line-height: 1.7;
+    font-size: 1.1rem;
     color: #333;
-    user-select: text;
-    max-width: 900px;
   }
+
   /* Ratings */
   .ratings {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    margin-top: 1.75rem;
-    user-select: none;
+    gap: 1rem;
+  }
+  .stars {
+    display: flex;
+    gap: 4px;
   }
   .stars svg {
-    width: 28px;
-    height: 28px;
-    fill: #fbbc04;
+    width: 22px;
+    height: 22px;
+    stroke: #f2b01e; /* golden stroke */
+    fill: none;
   }
-  .stars svg.empty {
-    fill: #ddd;
+  .stars svg.filled {
+    fill: #f2b01e;
   }
   .rating-score {
-    font-weight: 800;
-    font-size: 1.5rem;
+    font-weight: 700;
+    font-size: 1.25rem;
     color: #222;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
   .rating-count {
-    font-size: 1.15rem;
-    opacity: 0.75;
+    font-size: 0.95rem;
+    color: #666;
   }
+
   /* Notes & Support */
   .notes-text {
-    margin-top: 2.5rem;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #444;
-    max-width: 900px;
   }
   .notes-link {
-    color: #1a56db;
+    color: #007acc;
     text-decoration: none;
-    font-weight: 700;
   }
-  .notes-link:hover,
-  .notes-link:focus {
+  .notes-link:hover, .notes-link:focus {
     text-decoration: underline;
-    outline: none;
   }
+
+  /* Scrollbar styling for preview */
+  .preview-gallery::-webkit-scrollbar {
+    height: 6px;
+  }
+  .preview-gallery::-webkit-scrollbar-track {
+    background: #eee;
+    border-radius: 3px;
+  }
+  .preview-gallery::-webkit-scrollbar-thumb {
+    background: #007acc;
+    border-radius: 3px;
+  }
+
   /* Responsive */
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     .hero {
-      height: 280px;
-      padding: 2rem 2rem;
+      padding: 2rem 1rem 3rem;
     }
     .hero-title {
-      font-size: 2.6rem;
-    }
-    .hero-subtitle {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-    }
-    .btn {
-      font-size: 1rem;
-      padding: 0.5rem 2rem;
-    }
-    .btn-arrow {
-      width: 40px;
-      height: 40px;
-    }
-    .btn-arrow svg {
-      width: 20px;
-      height: 20px;
-    }
-    .btn-report {
-      font-size: 0.95rem;
-      padding: 0.45rem 1rem;
-      border-radius: 20px;
+      font-size: 2.25rem;
     }
     .buttons {
-      gap: 1rem;
       flex-wrap: wrap;
-    }
-    .author {
-      font-size: 1rem;
-      margin-top: 0.5rem;
-    }
-    .section {
-      padding: 2rem 2rem 3rem;
-      margin-top: 3rem;
-      max-width: 95vw;
-    }
-    .section h2 {
-      font-size: 1.85rem;
-      margin-bottom: 1rem;
+      justify-content: center;
     }
     .preview-gallery img {
-      height: 140px;
-    }
-    .about-text, .notes-text {
-      font-size: 1rem;
-      max-width: 100%;
-    }
-  }
-  @media (max-width: 420px) {
-    .hero-title {
-      font-size: 2rem;
-    }
-    .hero-subtitle {
-      font-size: 1rem;
-    }
-    .btn {
-      font-size: 0.9rem;
-      padding: 0.45rem 1.6rem;
-    }
-    .btn-report {
-      font-size: 0.85rem;
-      padding: 0.4rem 0.9rem;
-    }
-    .btn-arrow {
-      width: 36px;
-      height: 36px;
-    }
-    .btn-arrow svg {
-      width: 16px;
-      height: 16px;
+      height: 120px;
     }
   }
 </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="Book landing page The Great Adventure">
 
-<div class="container">
-
-  <header class="hero" role="banner" aria-label="Book title and cover background">
-    <div class="hero-content">
+    <header class="hero" aria-label="Book cover and title">
+      <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=160&q=80"
+        alt="Book cover image of The Great Adventure" loading="lazy" />
       <h1 class="hero-title">The Great Adventure</h1>
       <p class="hero-subtitle">By Geeks for Geeks</p>
-      <div class="buttons" role="group" aria-label="Actions">
-        <a href="https://example.com/read-the-great-adventure" class="btn" target="_blank" rel="noopener" role="button" aria-label="Read The Great Adventure book">Read</a>
-        <button class="btn-arrow" aria-label="More options">
+      <div class="buttons" role="group" aria-label="Page actions">
+        <a href="https://example.com/read-the-great-adventure" target="_blank" rel="noopener" class="button btn" role="button" aria-label="Read The Great Adventure">Read
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M7 10l5 5 5-5H7z"/>
+            <path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+        </a>
+        <button class="btn" aria-label="More options">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="5" r="2" />
+            <circle cx="12" cy="12" r="2" />
+            <circle cx="12" cy="19" r="2" />
+          </svg>
+          More
         </button>
-        <button class="btn-report" type="button" aria-label="Report this book">Report</button>
+        <button class="btn" aria-label="Report this book">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" fill="none">
+            <path d="M3 6h18M9 6V4a3 3 0 0 1 6 0v2M10.29 11H13.7l.79 7H9.5z"/>
+          </svg>
+          Report
+        </button>
       </div>
-      <p class="author">Author: Geeks for Geeks</p>
-    </div>
-  </header>
+      <p class="author" aria-label="Author name">Author: Geeks for Geeks</p>
+    </header>
 
-  <section class="section" aria-label="Preview images of the book">
-    <h2>Preview</h2>
-    <div class="preview-gallery" tabindex="0">
-      <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80" alt="Preview page 1 of The Great Adventure" />
-      <img src="https://images.unsplash.com/photo-1544716278-fd38580f106e?auto=format&fit=crop&w=400&q=80" alt="Preview page 2 of The Great Adventure" />
-      <img src="https://images.unsplash.com/photo-1590608897129-79d0b03ecbde?auto=format&fit=crop&w=400&q=80" alt="Preview page 3 of The Great Adventure" />
-      <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80" alt="Preview page 4 of The Great Adventure" />
-    </div>
-  </section>
-
-  <section class="section" aria-label="About the book The Great Adventure">
-    <h2>About this book</h2>
-    <p class="about-text">
-      "The Great Adventure" is an enthralling journey that explores themes of courage, friendship, and self-discovery. Written by the Geeks for Geeks team, this book weaves a tale that pulls readers into a vivid world full of memorable characters and unexpected twists. Perfect for fans of gripping storytelling and emotional depth.
-    </p>
-  </section>
-
-  <section class="section" aria-label="Book ratings and reviews">
-    <h2>Ratings and reviews</h2>
-    <div class="ratings" aria-live="polite" aria-atomic="true">
-      <div class="stars" aria-hidden="true" role="img" aria-label="4 out of 5 stars rating">
-        <svg><path d="M12 17.27L18.18 21 16.54 13.97 22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg><path d="M12 17.27L18.18 21 16.54 13.97 22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg><path d="M12 17.27L18.18 21 16.54 13.97 22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg><path d="M12 17.27L18.18 21 16.54 13.97 22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <svg class="empty"><path d="M12 15.4l-3.76 2.27 1-4.28-3.32-2.87 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.87 1 4.28z"/></svg>
+    <section aria-label="Book preview images">
+      <h2>Preview</h2>
+      <div class="preview-gallery" tabindex="0">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80" alt="Preview page 1" />
+        <img src="https://images.unsplash.com/photo-1544716278-fd38580f106e?auto=format&fit=crop&w=400&q=80" alt="Preview page 2" />
+        <img src="https://images.unsplash.com/photo-1590608897129-79d0b03ecbde?auto=format&fit=crop&w=400&q=80" alt="Preview page 3" />
+        <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=400&q=80" alt="Preview page 4" />
       </div>
-      <div class="rating-score" aria-label="Rating score">4.0</div>
-      <div class="rating-count" aria-label="Total number of ratings">(1,234 ratings)</div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" aria-label="Notes and support information for The Great Adventure">
-    <h2>Notes &amp; Support</h2>
-    <p class="notes-text">
-      If you experience any issues with this book or its content, please visit our 
-      <a href="https://example.com/support" target="_blank" rel="noopener" class="notes-link">Support Page</a> for assistance and further information.
-    </p>
-    <p class="notes-text">We appreciate your feedback to help us improve.</p>
-  </section>
+    <section aria-label="About the book The Great Adventure">
+      <h2>About this Book</h2>
+      <p class="about-text">
+        "The Great Adventure" is an enthralling journey that explores themes of courage, friendship, and self-discovery. Written by the Geeks for Geeks team, this book weaves a tale that pulls readers into a vivid world full of memorable characters and unexpected twists. Perfect for fans of gripping storytelling and emotional depth.
+      </p>
+    </section>
 
-</div>
+    <section aria-label="Book ratings and reviews">
+      <h2>Ratings & Reviews</h2>
+      <div class="ratings" aria-live="polite" aria-atomic="true">
+        <div class="stars" aria-hidden="true" role="img" aria-label="4 out of 5 stars">
+          <svg class="filled"><circle cx="12" cy="12" r="10"/></svg>
+          <svg class="filled"><circle cx="12" cy="12" r="10"/></svg>
+          <svg class="filled"><circle cx="12" cy="12" r="10"/></svg>
+          <svg class="filled"><circle cx="12" cy="12" r="10"/></svg>
+          <svg class="empty"><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <div class="rating-score" aria-label="Rating score">4.0</div>
+        <div class="rating-count" aria-label="Total ratings">(1,234 ratings)</div>
+      </div>
+    </section>
+
+    <section aria-label="Notes and support for The Great Adventure">
+      <h2>Notes & Support</h2>
+      <p class="notes-text">
+        If you experience any issues with this book or its content, please visit our <a href="https://example.com/support" class="notes-link" target="_blank" rel="noopener">Support Page</a> for assistance and further information.
+      </p>
+      <p class="notes-text">We appreciate your feedback to help us improve.</p>
+    </section>
+
+  </div>
+</body>
+</html>
